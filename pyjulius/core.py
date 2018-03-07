@@ -15,7 +15,6 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with pyjulius.  If not, see <http://www.gnu.org/licenses/>.
-from exceptions import ConnectionError
 from models import Sentence
 from pyjulius.exceptions import SendTimeoutError
 from xml.etree.ElementTree import XML, ParseError
@@ -170,7 +169,10 @@ class Client(threading.Thread):
             data = readable[0].recv(1)
             if data == '\n':
                 break
-            line += unicode(data, self.encoding)
+            try:
+                line += data
+            except Exception:
+                pass
         return line
 
     def _readblock(self):

@@ -51,7 +51,7 @@ class Sentence(object):
         return cls(words, score)
 
     def __repr__(self):
-        return "<Sentence(%.2f, %r)>" % (self.score, self.words)
+        return "<Sentence({}, {})>".format(self.score, [x.word.encode('utf-8') for x in self.words])
 
     def __unicode__(self):
         return u' '.join([unicode(w) for w in self.words])
@@ -90,7 +90,7 @@ class Word(object):
         :param string encoding: encoding of the xml
 
         """
-        word = unicode(xml.get('WORD'), encoding)
+        word = xml.get('WORD')
         confidence = float(xml.get('CM'))
         return cls(word, confidence)
 
